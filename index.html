@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Ativação 369</title>
+  <style>
+    /* Reset e estilos base */
+    * {box-sizing: border-box; margin: 0; padding: 0;}
+    body {font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background-color: #f5f7fa; color: #333;}
+    
+    /* Layout principal */
+    .container {display: flex; flex-direction: column; min-height: 100vh;}
+    .header {background-color: #1a202c; color: white; padding: 1rem; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.15);}
+    .titulo {font-size: 1.8rem; font-weight: bold;}
+    .content {flex-grow: 1; padding: 1rem; max-width: 1200px; margin: 0 auto; width: 100%;}
+    .footer {background-color: #2d3748; color: white; padding: 1rem; text-align: center; font-size: 0.9rem;}
+    
+    /* Navegação */
+    .tabs {display: flex; justify-content: center; background-color: #2d3748;}
+    .tab {padding: 0.75rem 1.5rem; color: white; background: none; border: none; font-size: 1rem; cursor: pointer;}
+    .tab:hover {background-color: #4a5568;}
+    .active-tab {background-color: #1a202c; font-weight: 600;}
+    
+    /* Cards e seções */
+    .card {background-color: white; border-radius: 0.5rem; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 1rem;}
+    .subtitulo {font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; color: #2d3748;}
+    .secao-titulo {font-weight: 600; margin-bottom: 0.5rem; color: #4a5568;}
+    
+    /* Formulários */
+    .input-group {margin-bottom: 1rem;}
+    .label {display: block; margin-bottom: 0.5rem; color: #4a5568; font-weight: 500;}
+    .input-wrapper {display: flex;}
+    .input {flex-grow: 1; padding: 0.6rem; border: 1px solid #cbd5e0; border-radius: 0.25rem 0 0 0.25rem; font-size: 1rem;}
+    .botao {padding: 0.6rem 1rem; background-color: #805ad5; color: white; border: none; border-radius: 0 0.25rem 0.25rem 0; cursor: pointer; font-weight: 500;}
+    .botao:hover {background-color: #6b46c1;}
+    
+    /* Resultados */
+    .resultado-box {margin-bottom: 1.5rem; padding: 1rem; border-radius: 0.5rem; color: white; text-align: center;}
+    .resultado-valor {font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;}
+    .resultado-tipo {font-weight: 600; font-size: 1.1rem;}
+    .resultado-descricao {font-size: 0.9rem; opacity: 0.9;}
+    
+    /* Grid e layout */
+    .grid-2 {display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;}
+    .grid-3 {display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;}
+    .grid-1-2 {display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;}
+    
+    /* Tabelas */
+    .tabela {width: 100%; border-collapse: collapse;}
+    .tabela th, .tabela td {padding: 0.5rem; text-align: left; border-bottom: 1px solid #edf2f7;}
+    .tabela-container {max-height: 15rem; overflow-y: auto; border: 1px solid #edf2f7; border-radius: 0.25rem;}
+    .tabela-head {background-color: #f7fafc; position: sticky; top: 0; z-index: 1;}
+    
+    /* Indicadores */
+    .indicador {display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 50%; margin-right: 0.4rem;}
+    .badge {display: inline-block; width: 1.5rem; height: 1.5rem; border-radius: 50%; color: white; text-align: center; line-height: 1.5rem;}
+    
+    /* Status */
+    .status-sucesso {background-color: #38a169;}
+    .status-alerta {background-color: #e53e3e;}
+    
+    /* Flexível */
+    .flex {display: flex;}
+    .flex-wrap {flex-wrap: wrap;}
+    .gap-1 {gap: 0.5rem;}
+    .gap-2 {gap: 1rem;}
+    .center {justify-content: center;}
+    .items-center {align-items: center;}
+    
+    /* Cores */
+    .bg-light {background-color: #f7fafc;}
+    .text-gray {color: #4a5568;}
+    .border-top {border-top: 1px solid #edf2f7;}
+    .mt-4 {margin-top: 1rem;}
+    .pt-4 {padding-top: 1rem;}
+    .p-4 {padding: 1rem;}
+    .mb-4 {margin-bottom: 1rem;}
+    .rounded {border-radius: 0.5rem;}
+    
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .grid-1-2, .grid-2, .grid-3 {grid-template-columns: 1fr;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="titulo">Calculadora de Ativação 369</h1>
+    </header>
+    
+    <div class="tabs">
+      <button class="tab active-tab" data-tab="ativacao">Ativação Lexital</button>
+      <button class="tab" data-tab="padrao369">Padrão 3-6-9</button>
+      <button class="tab" data-tab="info">Informações</button>
+    </div>
+    
+    <div class="content">
+      <!-- Aba de Ativação Lexital -->
+      <div class="card" id="ativacao-content">
+        <h2 class="subtitulo">Cálculo de Ativação Lexital</h2>
+        
+        <div class="input-group">
+          <label class="label">Nome ou Frase:</label>
+          <div class="input-wrapper">
+            <input type="text" id="input-nome" class="input" placeholder="Digite um nome ou frase para calcular">
+            <button class="botao" id="btn-calcular">Calcular</button>
+          </div>
+        </div>
+        
+        <div id="resultado-ativacao" style="display: none;"></div>
+      </div>
+      
+      <!-- Aba de Padrão 3-6-9 -->
+      <div class="card" id="padrao369-content" style="display: none;">
+        <h2 class="subtitulo">Verificação de Padrão 3-6-9</h2>
+        
+        <div class="input-group">
+          <label class="label">Nome para Verificação:</label>
+          <div class="input-wrapper">
+            <input type="text" id="input-padrao" class="input" placeholder="Digite um nome para verificar padrão 3-6-9">
+            <button class="botao" id="btn-verificar">Verificar</button>
+          </div>
+        </div>
+        
+        <div id="resultado-padrao" style="display: none;"></div>
+      </div>
+      
+      <!-- Aba de Informações -->
+      <div class="card" id="info-content" style="display: none;">
+        <h2 class="subtitulo">Sobre a Numerologia Lexital e o Padrão 369</h2>
+        
+        <div class="bg-light p-4 rounded mb-4">
+          <h3 class="secao-titulo">O que é Numerologia Lexital?</h3>
+          <p class="text-gray mb-4">
+            A numerologia lexital atribui valores numéricos (1-9) para cada letra do alfabeto,
+            seguindo um padrão cíclico. Cada letra recebe um valor de 1 a 9, repetindo o ciclo:
+          </p>
+          
+          <div class="tabela-container">
+            <table class="tabela">
+              <thead class="tabela-head">
+                <tr>
+                  <th>Letras</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>A, J, S</td><td>1</td></tr>
+                <tr><td>B, K, T</td><td>2</td></tr>
+                <tr><td>C, L, U</td><td>3</td></tr>
+                <tr><td>D, M, V</td><td>4</td></tr>
+                <tr><td>E, N, W</td><td>5</td></tr>
+                <tr><td>F, O, X</td><td>6</td></tr>
+                <tr><td>G, P, Y</td><td>7</td></tr>
+                <tr><td>H, Q, Z</td><td>8</td></tr>
+                <tr><td>I, R</td><td>9</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <div class="bg-light p-4 rounded mb-4">
+          <h3 class="secao-titulo">O Padrão 3-6-9</h3>
+          <p class="text-gray mb-4">
+            Segundo perspectivas numerológicas ampliadas, o padrão 3-6-9 é considerado 
+            um código de manifestação energética. Para que um nome esteja em harmonia com este padrão, 
+            ele deve conter pelo menos uma ocorrência de cada um dos números 3, 6 e 9 em sua composição lexital.
+          </p>
+          
+          <div class="grid-3">
+            <div class="p-4 bg-light rounded" style="border: 1px solid #e9d8fd;">
+              <h4 class="secao-titulo" style="color: #27ae60;">3 - Criatividade</h4>
+              <p class="text-gray">Representa a semente plantada, o início do processo criativo.</p>
+            </div>
+            <div class="p-4 bg-light rounded" style="border: 1px solid #e9d8fd;">
+              <h4 class="secao-titulo" style="color: #2980b9;">6 - Harmonia</h4>
+              <p class="text-gray">Simboliza o desenvolvimento e fluxo criativo em equilíbrio.</p>
+            </div>
+            <div class="p-4 bg-light rounded" style="border: 1px solid #e9d8fd;">
+              <h4 class="secao-titulo" style="color: #8e44ad;">9 - Completude</h4>
+              <p class="text-gray">Manifesta a conclusão do ciclo e a realização do potencial.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="footer">
+      <p>Calculadora de Ativação 369 - Baseada em princípios de numerologia lexital ampliada</p>
+      <p style="color: #a0aec0; margin-top: 0.25rem;">© 2025 - Todos os direitos reservados</p>
+    </footer>
+  </div>
+
+  <script>
+    // Mapeamento lexital (valores para cada letra)
+    const lexitalMap = {
+      a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9,
+      j: 1, k: 2, l: 3, m: 4, n: 5, o: 6, p: 7, q: 8, r: 9,
+      s: 1, t: 2, u: 3, v: 4, w: 5, x: 6, y: 7, z: 8
+    };
+    
+    // Redução numerológica (preservando números mestres)
+    function reduzirNumerologicamente(num) {
+      if (num === 11 || num === 22 || num === 33) return num;
+      
+      while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+        num = Array.from(String(num)).reduce((sum, digit) => sum + parseInt(digit), 0);
+        if (num === 11 || num === 22 || num === 33) break;
+      }
+      
+      return num;
+    }
+    
+    // Cálculo do valor lexital
+    function calcularValorLexital(texto) {
+      if (!texto || texto.trim() === '') return null;
+      
+      const valorTotal = Array.from(texto.toLowerCase())
+        .filter(char => char.match(/[a-z]/))
+        .reduce((total, char) => total + (lexitalMap[char] || 0), 0);
+      
+      const reduzido = reduzirNumerologicamente(valorTotal);
+      
+      let tipoAtivacao, descricaoAtivacao, corFundo;
+      
+      if (reduzido === 3) {
+        tipoAtivacao = "Ativação Inicial";
+        descricaoAtivacao = "Semente plantada para manifestação";
+        corFundo = "#27ae60";
+      } else if (reduzido === 6) {
+        tipoAtivacao = "Ativação Avançada";
+        descricaoAtivacao = "Fluxo criativo em desenvolvimento";
+        corFundo = "#2980b9";
+      } else if (reduzido === 9) {
+        tipoAtivacao = "Ativação Plena";
+        descricaoAtivacao = "Completude da frequência 369";
+        corFundo = "#8e44ad";
+      } else {
+        tipoAtivacao = "Fora da Frequência 369";
+        descricaoAtivacao = "Recalibração necessária";
+        corFundo = "#c0392b";
+      }
+      
+      return { original: valorTotal, reduzido, tipoAtivacao, descricaoAtivacao, cor: corFundo };
+    }
+    
+    // Análise do padrão 369
+    function analisarPadrao369(texto) {
+      if (!texto || texto.trim() === '') return null;
+      
+      const valoresPorLetra = Array.from(texto.toLowerCase())
+        .filter(char => char.match(/[a-z]/))
+        .map(char => ({ letra: char, valor: lexitalMap[char] || 0 }));
+      
+      const contagem = {
+        3: valoresPorLetra.filter(item => item.valor === 3).length,
+        6: valoresPorLetra.filter(item => item.valor === 6).length,
+        9: valoresPorLetra.filter(item => item.valor === 9).length
+      };
+      
+      const letrasEncontradas = {
+        3: [...new Set(valoresPorLetra.filter(item => item.valor === 3).map(item => item.letra))],
+        6: [...new Set(valoresPorLetra.filter(item => item.valor === 6).map(item => item.letra))],
+        9: [...new Set(valoresPorLetra.filter(item => item.valor === 9).map(item => item.letra))]
+      };
+      
+      const faltantes = [];
+      if (contagem[3] === 0) faltantes.push(3);
+      if (contagem[6] === 0) faltantes.push(6);
+      if (contagem[9] === 0) faltantes.push(9);
+      
+      return {
+        nome: texto,
+        contagem,
+        letrasEncontradas,
+        faltantes,
+        temPadrao369: faltantes.length === 0
+      };
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Abas de navegação
+      const tabs = document.querySelectorAll('.tab');
+      const contents = {
+        ativacao: document.getElementById('ativacao-content'),
+        padrao369: document.getElementById('padrao369-content'),
+        info: document.getElementById('info-content')
+      };
+      
+      // Botões e inputs
+      const btnCalcular = document.getElementById('btn-calcular');
+      const btnVerificar = document.getElementById('btn-verificar');
+      const inputNome = document.getElementById('input-nome');
+      const inputPadrao = document.getElementById('input-padrao');
+      const resultadoAtivacao = document.getElementById('resultado-ativacao');
+      const resultadoPadrao = document.getElementById('resultado-padrao');
+      
+      // Controle de abas
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          const tabName = this.getAttribute('data-tab');
+          
+          // Atualizar tabs
+          tabs.forEach(t => t.classList.remove('active-tab'));
+          this.classList.add('active-tab');
+          
+          // Mostrar conteúdo da aba selecionada
+          Object.keys(contents).forEach(key => {
+            contents[key].style.display = key === tabName ? 'block' : 'none';
+          });
+        });
+      });
+      
+      // Calcular valor lexital
+      btnCalcular.addEventListener('click', function() {
+        const nome = inputNome.value.trim();
+        if (nome === '') return;
+        
+        const resultado = calcularValorLexital(nome);
+        
+        if (resultado) {
+          const letrasHTML = Array.from(nome.toLowerCase())
+            .filter(char => char.match(/[a-z]/))
+            .map(char => `
+              <tr>
+                <td>${char}</td>
+                <td>
+                  <span class="indicador" style="background-color: ${[3,6,9].includes(lexitalMap[char]) ? '#8e44ad' : '#6c757d'}"></span>
+                  ${lexitalMap[char] || 0}
+                </td>
+              </tr>
+            `).join('');
+          
+          resultadoAtivacao.innerHTML = `
+            <div class="grid-1-2">
+              <div>
+                <div class="resultado-box" style="background-color: ${resultado.cor}">
+                  <div class="resultado-valor">${resultado.reduzido}</div>
+                  <div class="resultado-tipo">${resultado.tipoAtivacao}</div>
+                  <div class="resultado-descricao">${resultado.descricaoAtivacao}</div>
+                </div>
+                
+                <div class="grid-2">
+                  <div>
+                    <h3 class="secao-titulo">Valor Lexital Bruto:</h3>
+                    <div class="resultado-box" style="background-color: #2c3e50">
+                      <div class="resultado-valor">${resultado.original}</div>
+                      <div class="resultado-descricao">Soma dos valores</div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 class="secao-titulo">Letras:</h3>
+                    <div class="tabela-container">
+                      <table class="tabela">
+                        <thead class="tabela-head">
+                          <tr>
+                            <th>Letra</th>
+                            <th>Valor</th>
+                          </tr>
+                        </thead>
+                        <tbody>${letrasHTML}</tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="secao-titulo">Mapa de Valores:</h3>
+                <div class="flex flex-wrap gap-1 center mb-4">
+                  ${['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                     'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+                     's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+                    ].map(char => `
+                      <div style="background-color: ${[3,6,9].includes(lexitalMap[char]) ? '#f5e0ff' : '#edf2f7'}; padding: 0.5rem 0.75rem; border-radius: 0.25rem; text-align: center;">
+                        <div style="font-family: monospace; font-size: 1.2rem;">${char}</div>
+                        <div style="font-size: 0.8rem; color: #4a5568;">${lexitalMap[char]}</div>
+                      </div>
+                    `).join('')}
+                </div>
+                
+                <div class="border-top pt-4 mt-4">
+                  <h3 class="secao-titulo">Interpretação dos Valores:</h3>
+                  <div class="flex flex-wrap gap-2">
+                    <div class="flex items-center">
+                      <span class="indicador" style="background-color: #8e44ad;"></span>
+                      <span>Ativação Plena (9)</span>
+                    </div>
+                    <div class="flex items-center">
+                      <span class="indicador" style="background-color: #2980b9;"></span>
+                      <span>Ativação Avançada (6)</span>
+                    </div>
+                    <div class="flex items-center">
+                      <span class="indicador" style="background-color: #27ae60;"></span>
+                      <span>Ativação Inicial (3)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          
+          resultadoAtivacao.style.display = 'block';
+          inputPadrao.value = nome;
+        }
+      });
+      
+      // Verificar padrão 369
+      btnVerificar.addEventListener('click', function() {
+        const nome = inputPadrao.value.trim();
+        if (nome === '') return;
+        
+        const resultado = analisarPadrao369(nome);
+        
+        if (resultado) {
+          resultadoPadrao.innerHTML = `
+            <div class="resultado-box ${resultado.temPadrao369 ? 'status-sucesso' : 'status-alerta'}">
+              <div class="resultado-tipo">
+                ${resultado.temPadrao369 ? "Padrão 3-6-9 Desbloqueado!" : "Padrão 3-6-9 Incompleto"}
+              </div>
+              <div class="resultado-descricao">
+                ${resultado.temPadrao369 
+                  ? `O nome "${resultado.nome}" contém todos os números da sequência 3-6-9!` 
+                  : `Faltam os números: ${resultado.faltantes.join(', ')}`}
+              </div>
+            </div>
+            
+            <div class="grid-3">
+              ${[3, 6, 9].map(num => `
+                <div style="padding: 1rem; border-radius: 0.5rem; text-align: center; 
+                            background-color: ${resultado.contagem[num] ? '#e9d8fd' : '#fed7d7'};">
+                  <div style="font-size: 2rem; font-weight: bold;">${num}</div>
+                  <div style="margin-top: 0.5rem;">${resultado.contagem[num] || 0} ocorrência(s)</div>
+                  ${resultado.letrasEncontradas[num] && resultado.letrasEncontradas[num].length > 0 
+                    ? `<div style="font-size: 0.8rem; margin-top: 0.5rem;">
+                        Letras: ${resultado.letrasEncontradas[num].join(', ')}
+                      </div>` 
+                    : ''}
+                </div>
+              `).join('')}
+            </div>
+            
+            <div class="tabela-container mt-4">
+              <table class="tabela">
+                <thead class="tabela-head">
+                  <tr>
+                    <th>Letra</th>
+                    <th>Valor</th>
+                    <th>Ocorrências</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${Array.from(new Set(nome.toLowerCase().match(/[a-z]/g) || [])).map(letra => `
+                    <tr>
+                      <td>${letra}</td>
+                      <td>
+                        <span class="badge" style="background-color: ${[3,6,9].includes(lexitalMap[letra]) ? '#8e44ad' : '#6c757d'}">
+                          ${lexitalMap[letra] || 0}
+                        </span>
+                      </td>
+                      <td>${nome.toLowerCase().split(letra).length - 1}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          `;
+          
+          resultadoPadrao.style.display = 'block';
+        }
+      });
+      
+      // Tecla Enter nos inputs
+      inputNome.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') btnCalcular.click();
+      });
+      
+      inputPadrao.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') btnVerificar.click();
+      });
+    });
+  </script>
+</body>
+</html>
